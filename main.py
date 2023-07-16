@@ -42,7 +42,8 @@ def create_app():
         application,
         swagger_from_file='swagger.yaml',
         swagger_url='/api/v1/doc',
-        api_base_url="/api/v1"
+        api_base_url="/api/v1",
+        ui_version=3
     )
 
     return application
