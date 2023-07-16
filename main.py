@@ -1,16 +1,64 @@
-# This is a sample Python script.
+import os
+from typing import Dict
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from aiohttp import web
+
+from server.application.const import (
+    ADDING_OPERAND,
+    SUBTRACT_OPERAND,
+    MULTIPLY_OPERAND,
+    DIVIDE_OPERAND,
+    SQUARE_OPERAND
+)
+from server.application.controller import CalculatorController
+from server.application.handler import CalculatorHandler
+from aiohttp_swagger import setup_swagger
+from server.application.strategy.calculate_strategy import (
+    StrategyContext as CalculateStrategyContext,
+    OperandsAddingStrategy, OperandsSubtractStrategy,
+    OperandsMultiplyStrategy, OperandsDivideStrategy,
+    OperandsSquareStrategy,
+)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def create_app():
+    application = web.Application()
+    strategies = create_strategies()
+    calculator_controller = CalculatorController(strategies=strategies)
+    calculator_handler = CalculatorHandler(controller=calculator_controller)
+    application.router.add_get(
+        '/api/v1/calculate',
+        calculator_handler.calculate
+    )
+    application.router.add_get(
+        '/api/v1/calculate_square',
+        calculator_handler.calculate
+    )
+
+    static_dir = os.path.join(os.path.dirname(__file__), 'client')
+    application.router.add_static('/client', path=static_dir)
+
+    setup_swagger(
+        application,
+        swagger_from_file='swagger.yaml',
+        swagger_url='/api/v1/doc',
+        api_base_url="/api/v1"
+    )
+
+    return application
 
 
-# Press the green button in the gutter to run the script.
+def create_strategies() -> Dict[str, CalculateStrategyContext]:
+    strategies = {
+        ADDING_OPERAND: CalculateStrategyContext(OperandsAddingStrategy()),
+        SUBTRACT_OPERAND: CalculateStrategyContext(OperandsSubtractStrategy()),
+        MULTIPLY_OPERAND: CalculateStrategyContext(OperandsMultiplyStrategy()),
+        DIVIDE_OPERAND: CalculateStrategyContext(OperandsDivideStrategy()),
+        SQUARE_OPERAND: CalculateStrategyContext(OperandsSquareStrategy()),
+    }
+    return strategies
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app = create_app()
+    web.run_app(app)

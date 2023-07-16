@@ -1,0 +1,63 @@
+openapi: 3.0.0
+info:
+  title: Calculator API
+  version: 1.0.0
+paths:
+  /api/v1/calculate:
+    get:
+      summary: Calculate the result of two operands
+      parameters:
+        - name: first_operand
+          in: query
+          description: The first operand
+          required: true
+          schema:
+            type: number
+        - name: second_operand
+          in: query
+          description: The second operand
+          required: true
+          schema:
+            type: number
+        - name: operator
+          in: query
+          description: The operator (+, -, *, /)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: number
+  /api/v1/calculate_square:
+    get:
+      summary: Calculate the square of a number
+      parameters:
+        - name: number
+          in: query
+          description: The number to calculate the square of
+          required: true
+          schema:
+            type: number
+        - name: operator
+          in: query
+          description: The operator (**)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: number
