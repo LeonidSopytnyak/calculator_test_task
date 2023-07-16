@@ -31,7 +31,7 @@ arithmetic calculations and calculate the square of a number.
 
 4. Access the application in your web browser:
 
-   `http://0.0.0.0:8080/api/v1/doc`
+   `http://0.0.0.0:8080/client/calculator.html`
 ## API Documentation
 
 The API documentation is available at the following URL:
