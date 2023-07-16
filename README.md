@@ -1,5 +1,4 @@
-`# Calculator App
-
+# Calculator App
 The Calculator App is a simple web application that allows users to perform
 arithmetic calculations and calculate the square of a number.
 
