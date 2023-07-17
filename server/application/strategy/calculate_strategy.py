@@ -13,7 +13,7 @@ class CalculateStrategy(ABC):
             first_operand: float,
             second_operand: float,
             number: Optional[float] = None
-    ):
+    ) -> float:
         pass
 
 
@@ -34,7 +34,7 @@ class StrategyContext:
             first_operand: float,
             second_operand: float,
             number: Optional[float] = None
-    ):
+    ) -> float:
         return self._strategy.calculate(
             first_operand=first_operand,
             second_operand=second_operand,
@@ -48,7 +48,7 @@ class OperandsAddingStrategy(CalculateStrategy):
             first_operand: float,
             second_operand: float,
             number: Optional[float] = None
-    ):
+    ) -> float:
         return first_operand + second_operand
 
 
@@ -58,7 +58,7 @@ class OperandsSubtractStrategy(CalculateStrategy):
             first_operand: float,
             second_operand: float,
             number: Optional[float] = None
-    ):
+    ) -> float:
         return first_operand - second_operand
 
 
@@ -68,7 +68,7 @@ class OperandsMultiplyStrategy(CalculateStrategy):
             first_operand: float,
             second_operand: float,
             number: Optional[float] = None
-    ):
+    ) -> float:
         return first_operand * second_operand
 
 
@@ -78,7 +78,7 @@ class OperandsDivideStrategy(CalculateStrategy):
             first_operand: float,
             second_operand: float,
             number: Optional[float] = None
-    ):
+    ) -> float:
         if not second_operand:
             raise ValueError('Division by zero is not allowed')
         return first_operand / second_operand
@@ -90,5 +90,5 @@ class OperandsSquareStrategy(CalculateStrategy):
             first_operand: float,
             second_operand: float,
             number: Optional[float] = None
-    ):
+    ) -> float:
         return number ** 2
