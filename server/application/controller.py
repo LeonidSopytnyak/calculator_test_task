@@ -1,5 +1,7 @@
-from typing import Dict, Union
-
+from typing import (
+    Dict,
+    Union
+)
 from server.application.strategy.calculate_strategy import \
     StrategyContext as CalculateStrategyContext
 
